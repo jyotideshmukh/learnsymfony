@@ -23,12 +23,12 @@ class QuestionController extends AbstractController
             'How to be safe in pandemic',
             'How to increase hemoglobin'
         ];
-        $html = $twigEnvironment->render('question/homepage.html.twig',
+       /* $html = $twigEnvironment->render('question/homepage.html.twig',
             ['questions'=>$questions]);
-        return new Response($html);
+        return new Response($html);*/
        // return new Response("Homepage");
-        /*return $this->render('question/homepage.html.twig',
-        ['questions'=>$questions]);*/
+        return $this->render('question/homepage.html.twig',
+        ['questions'=>$questions]);
     }
 
     /**
