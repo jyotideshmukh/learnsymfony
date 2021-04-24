@@ -3,15 +3,30 @@
     {{ question }}
 {% endblock %}
 {% block body %}
-<h1>{{ question }}</h1>
+<h1 class="display-3 text-center my-4">{{ question | replace({ '_' : ' '} ) }}</h1>
 
 
-<div>
+<div class="container">
     <h2>Answers are: {{ answers | length }}</h2>
-    <ul>
+    <ul class="card">
         {% for answer in answers %}
-        <li> {{  answer}} </li>
+        <li>
+            <div class="">
+            {{  answer }}
+            </div>
+            <div class="d-block mt-3 vote-arrows js-vote-arrows">
+                <a class="vote-up" href="#" data-direction="up"><i class="far fa-arrow-alt-circle-up"></i></a>
+                <a class="vote-down" href="#" data-direction="down"><i class="far fa-arrow-alt-circle-down"></i></a>
+                <span>+<span class="js-vote-total">6</span></span>
+            </div>
+
+        </li>
         {% endfor %}
     </ul>
 </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/comment.js') }}" ></script>
 {% endblock %}

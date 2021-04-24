@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    <h1> All the questions</h1>
+{% endblock %}
+
+{% block body %}
+
+    {% for question in questions %}
+        <div class="card mg-bt-5">
+            <div class="card-header">
+                {{ question }}
+                <a href="{{ path('app_question_answer',{'slug' :  question | replace({ ' ' : '_'} ) }) }}">
+                    Show
+                </a>
+
+            </div>
+            <div>
+
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
