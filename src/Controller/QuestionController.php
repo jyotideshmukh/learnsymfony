@@ -17,9 +17,9 @@ class QuestionController extends AbstractController
      */
 
 
-    public function homepage(Environment $twigEnvironment){
+    public function homepage(){
         $questions = [
-            'How to pass devops',
+            'How to pass **devops**',
             'How to be safe in pandemic',
             'How to increase hemoglobin'
         ];
