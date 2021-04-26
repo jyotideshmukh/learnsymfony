@@ -50,7 +50,7 @@ class QuestionController extends AbstractController
             ];
             return $answers;
         });
-        dd($markdownParser);
+        //dd($markdownParser);
 
 
         return $this->render('question/show.html.twig',
