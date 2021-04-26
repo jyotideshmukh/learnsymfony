@@ -12,7 +12,7 @@
         {% for answer in answers %}
         <li>
             <div class="">
-            {{  answer }}
+            {{  answer|markdown }}
             </div>
             <div class="d-block mt-3 vote-arrows js-vote-arrows">
                 <a class="vote-up" href="#" data-direction="up"><i class="far fa-arrow-alt-circle-up"></i></a>
