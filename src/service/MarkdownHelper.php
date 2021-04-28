@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\services;
+namespace App\service;
 
 
 use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
@@ -11,17 +11,22 @@ class MarkdownHelper
 {
     public $markDownParser;
     public $cache;
+    public $isDebug;
 
     /**
      * MarkdownHelper constructor.
      */
-    public function __construct(MarkdownParserInterface $markdownParser, CacheInterface $cache)
+    public function __construct(MarkdownParserInterface $markdownParser, CacheInterface $cache,
+                                bool $isDebug)
     {
         $this->markDownParser = $markdownParser;
         $this->cache = $cache;
+        $this->isDebug = $isDebug;
+
     }
 
     public function parse(string $source){
+        //dd($this->isDebug);
             return $this->cache->get('markdown_'.md5($source),function() use ($source){
                    return $this->markDownParser->transformMarkdown($source);
             });

@@ -4,7 +4,7 @@
 namespace App\Controller;
 
 
-use App\services\MarkdownHelper;
+use App\service\MarkdownHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 #use Twig\Environment;
