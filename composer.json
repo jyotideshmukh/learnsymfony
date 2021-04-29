@@ -9,6 +9,7 @@
         "ext-iconv": "*",
         "knplabs/knp-markdown-bundle": "^1.9",
         "sensio/framework-extra-bundle": "^6.1",
+        "sentry/sentry-symfony": "^4.1",
         "symfony/asset": "5.2.*",
         "symfony/console": "5.2.*",
         "symfony/dotenv": "5.2.*",
@@ -61,7 +62,7 @@
     },
     "extra": {
         "symfony": {
-            "allow-contrib": false,
+            "allow-contrib": true,
             "require": "5.2.*"
         }
     },
