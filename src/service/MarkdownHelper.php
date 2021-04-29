@@ -18,7 +18,7 @@ class MarkdownHelper
      * MarkdownHelper constructor.
      */
     public function __construct(MarkdownParserInterface $markdownParser, CacheInterface $cache,
-                                bool $isDebug, HubInterface $hub)
+                                bool $isDebug)
     {
         $this->markDownParser = $markdownParser;
         $this->cache = $cache;
@@ -32,7 +32,7 @@ class MarkdownHelper
         if(!$this->isDebug){
             return $this->markDownParser->transformMarkdown($source);
         }
-        //throw new \Exception("Bad stuff happened");
+        //throw new \Exception("checking sentry after sentry dsn in secret valut");
             return $this->cache->get('markdown_'.md5($source),function() use ($source){
                    return $this->markDownParser->transformMarkdown($source);
             });
