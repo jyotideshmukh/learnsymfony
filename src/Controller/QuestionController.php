@@ -22,10 +22,10 @@ class QuestionController extends AbstractController
     public function homepage(EntityManagerInterface $entityManager){
         $repository = $entityManager->getRepository(Question::class);
         $questions = $repository->findAll();
-        foreach($questions as $question){
+        /*foreach($questions as $question){
             $questionsArr[] = $question->getSlug();
-        }
-        $questions = $questionsArr;
+        }*/
+        //$questions = $questionsArr;
         /*$questions = [
             'How to pass devops',
             'How to be safe in pandemic',

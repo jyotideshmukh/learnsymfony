@@ -6,13 +6,19 @@
 {% block body %}
 
     {% for question in questions %}
-        <div class="card mg-bt-5">
+        <div class="card mb-5">
             <div class="card-header">
-                {{ question }}
-                <a href="{{ path('app_question_answer',{'slug' :  question | replace({ ' ' : '_'} ) }) }}">
+                {{ question.name }}
+                <a href="{{ path('app_question_answer',{'slug' :  question.slug }) }}">
                     Show
                 </a>
 
+            </div>
+            <div class="card-body">
+                {{ question.question }}
+            </div>
+            <div class="card-footer">
+                {{ question.askedAt | ago }}
             </div>
             <div>
 
