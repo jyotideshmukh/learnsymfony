@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Question;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -17,6 +18,24 @@ class QuestionRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Question::class);
+    }
+
+    private function getOrCreateQueryBuilder(QueryBuilder $qb = null): QueryBuilder
+    {
+        return $qb ?: $this->createQueryBuilder('q');
+    }
+
+    public function findAllByAskedAtDesc(){
+        return $this->addIsAskedQueryBuilder()
+            ->orderBy('q.askedAt','DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function addIsAskedQueryBuilder(QueryBuilder $db = null){
+        return $this->getOrCreateQueryBuilder($db)
+            ->andWhere('q.askedAt IS NOT NULL');
     }
 
     // /**

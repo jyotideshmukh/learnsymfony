@@ -5,6 +5,7 @@ namespace App\Controller;
 
 
 use App\Entity\Question;
+use App\Repository\QuestionRepository;
 use App\service\MarkdownHelper;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,9 +20,10 @@ class QuestionController extends AbstractController
      */
 
 
-    public function homepage(EntityManagerInterface $entityManager){
-        $repository = $entityManager->getRepository(Question::class);
-        $questions = $repository->findAll();
+    public function homepage( QuestionRepository $questionRepository){
+        $questions = $questionRepository->findAllByAskedAtDesc();
+        /*$repository = $entityManager->getRepository(Question::class);
+        $questions = $repository->findAll();*/
         /*foreach($questions as $question){
             $questionsArr[] = $question->getSlug();
         }*/
@@ -60,15 +62,16 @@ class QuestionController extends AbstractController
      * @Route("/questions/{slug}",name="app_question_answer")
      */
 
-    public function show($slug, MarkdownHelper $markdownHelper, EntityManagerInterface $entityManager){
+    public function show($slug, MarkdownHelper $markdownHelper, QuestionRepository $questionRepository){
         /*
          return new Response(sprintf(" My question is '%s'",
             str_replace("-"," ",$slug)));
         */
 
-        $repository = $entityManager->getRepository(Question::class);
+        //$repository = $entityManager->getRepository(Question::class);
         /**  var Question|null $question */
-        $question = $repository->findOneBy(['slug'=>$slug]);
+        //$question = $repository->findOneBy(['slug'=>$slug]);
+        $question = $questionRepository->findOneBy(['slug'=>$slug]);
         if(!$question){
             throw $this->createNotFoundException(
                 sprintf('Given slug not found "%s"', $slug)
