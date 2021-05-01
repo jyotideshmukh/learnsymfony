@@ -46,7 +46,8 @@ final class QuestionFactory extends ModelFactory
             'question'=>self::faker()->paragraphs(
                 self::faker()->numberBetween(1, 4),
                 true),
-            'askedAt'=>self::faker()->dateTimeBetween('-100 days', '-1 minute')
+            'askedAt'=>self::faker()->dateTimeBetween('-100 days', '-1 minute'),
+            'created_at'=>new \DateTime()
             // TODO add your default values here (https://github.com/zenstruck/foundry#model-factories)
         ];
     }
