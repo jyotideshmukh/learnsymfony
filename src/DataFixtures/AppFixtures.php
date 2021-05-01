@@ -21,6 +21,7 @@ class AppFixtures extends Fixture
          $manager->persist($question);*/
 
         QuestionFactory::new()->createMany(20);
+        QuestionFactory::new()->unPublished()->createMany(5);
         $manager->flush();
 
         $manager->flush();
