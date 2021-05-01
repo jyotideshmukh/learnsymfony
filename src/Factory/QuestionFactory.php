@@ -55,13 +55,13 @@ final class QuestionFactory extends ModelFactory
     {
         // see https://github.com/zenstruck/foundry#initialization
         return $this
-             ->afterInstantiate(function(Question $question) {
+             /*->afterInstantiate(function(Question $question) {
                  if (!$question->getSlug()) {
                      $slugger = new AsciiSlugger();
                      $slug = $slugger->slug(strtolower($question->getName()));
                      $question->setSlug($slug);
                  }
-             })
+             })*/
         ;
     }
 
