@@ -1,23 +1,37 @@
 {% extends 'base.html.twig' %}
 {% block title %}
-    {{ question }}
+    {{ question.name }}
 {% endblock %}
 {% block body %}
-<h1 class="display-3 text-center my-4">{{ question | replace({ '_' : ' '} ) }}</h1>
+<h1 class="display-3 text-center my-4">{{ question.name | replace({ '_' : ' '} ) }}</h1>
 
 
 <div class="container">
     <h2>Answers are: {{ answers | length }}</h2>
+    <form action="{{ path("app_question_vote", {'slug': question.slug} ) }}" method="post">
+        <div class="d-block mt-3 vote-arrows">
+            <button class="vote-up" name="direction" value="up">Up
+            </button>
+            <button class="vote-up" name="direction" value="down">Down
+            </button>
+            <span class="js-vote-total">
+                            {{ question.votesAsString }}
+                        </span>
+        </div>
+    </form>
+
+    <div class="d-block mt-3 vote-arrows js-vote-arrows">
+        <a class="vote-up" href="#" data-direction="up"><i class="far fa-arrow-alt-circle-up"></i></a>
+        <a class="vote-down" href="#" data-direction="down"><i class="far fa-arrow-alt-circle-down"></i></a>
+        <span class="js-vote-total">
+                            {{ question.votesAsString }}
+        </span>
+    </div>
     <ul class="card">
         {% for answer in answers %}
         <li>
             <div class="">
             {{  answer|parse_markdown | raw }}
-            </div>
-            <div class="d-block mt-3 vote-arrows js-vote-arrows">
-                <a class="vote-up" href="#" data-direction="up"><i class="far fa-arrow-alt-circle-up"></i></a>
-                <a class="vote-down" href="#" data-direction="down"><i class="far fa-arrow-alt-circle-down"></i></a>
-                <span>+<span class="js-vote-total">6</span></span>
             </div>
 
         </li>

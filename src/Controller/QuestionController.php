@@ -9,6 +9,7 @@ use App\Repository\QuestionRepository;
 use App\service\MarkdownHelper;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 #use Twig\Environment;
@@ -18,8 +19,6 @@ class QuestionController extends AbstractController
     /**
      * @Route("/", name="app_homepage")
      */
-
-
     public function homepage( QuestionRepository $questionRepository){
         $questions = $questionRepository->findAllByAskedAtDesc();
         /*$repository = $entityManager->getRepository(Question::class);
@@ -62,7 +61,7 @@ class QuestionController extends AbstractController
      * @Route("/questions/{slug}",name="app_question_answer")
      */
 
-    public function show($slug, MarkdownHelper $markdownHelper, QuestionRepository $questionRepository){
+    public function show(Question $question, MarkdownHelper $markdownHelper){
         /*
          return new Response(sprintf(" My question is '%s'",
             str_replace("-"," ",$slug)));
@@ -71,10 +70,11 @@ class QuestionController extends AbstractController
         //$repository = $entityManager->getRepository(Question::class);
         /**  var Question|null $question */
         //$question = $repository->findOneBy(['slug'=>$slug]);
-        $question = $questionRepository->findOneBy(['slug'=>$slug]);
+       /* $question = $questionRepository->findOneBy(['slug'=>$slug]);*/
         if(!$question){
+            $request = Request::createFromGlobals();
             throw $this->createNotFoundException(
-                sprintf('Given slug not found "%s"', $slug)
+                sprintf('Given slug not found "%s"', $request->query->get('slug'))
             );
         }
             $answers = [
@@ -90,10 +90,30 @@ class QuestionController extends AbstractController
         return $this->render('question/show.html.twig',
         [
            // 'question'=>str_replace("-"," ",$slug),
-            'question'=>$slug,
+            'question'=>$question,
             'answers'=>$answers
         ]);
 
 
+    }
+
+    /**
+     * @Route("/questions/{slug}/vote", name="app_question_vote", methods="POST")
+     */
+    public function questionVote(Question $question, Request $request,EntityManagerInterface $entityManager){
+     //dd($question);
+     //dd($request->request->all() );
+        $direction = $request->request->get('direction');
+        if ($direction === 'up') {
+            //$question->setVotes($question->getVotes() + 1);
+            $question->upVote();
+        } elseif ($direction === 'down') {
+           // $question->setVotes($question->getVotes() - 1);
+            $question->downVote();
+        }
+        $entityManager->flush();
+       return $this->redirectToRoute('app_question_answer',
+           ['slug'=>$question->getSlug()]
+       );
     }
 }
